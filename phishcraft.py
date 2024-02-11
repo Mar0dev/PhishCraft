@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.header import Header
 
-# Function to read SMTP and sender settings from a file
+# Read SMTP and sender settings from a file
 def read_config(filename):
     config = configparser.ConfigParser()
     config.read(filename)
@@ -23,12 +23,12 @@ def read_config(filename):
         }
     }
 
-# Function to read message from a file
+# Read message from a .txt file
 def read_message(filename):
     with open(filename, 'r') as file:
         return file.read().strip()
 
-# Function to send email
+# Send email
 def send_email(sender_info, smtp_settings, recipient_email, subject, message, is_html):
     msg = MIMEMultipart()
     msg['From'] = Header(f"{sender_info['name']} <{sender_info['email']}>", 'utf-8')
@@ -58,8 +58,8 @@ def main():
     parser.add_argument("-l", "--email_list", required=True, help="File containing list of emails.")
     parser.add_argument("-s", "--subject", required=True, help="Subject of the email.")
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("-c", "--content", help="File containing email content as plain text.")
-    group.add_argument("-ht", "--html_content", help="File containing email content as HTML.")
+    group.add_argument("-c", "--content", help=".txt file containing email content as plain text.")
+    group.add_argument("-ht", "--html_content", help=".html file containing email content as HTML.")
     group.add_argument("-m", "--message", help="Directly provide the email message as text.")
     
     args = parser.parse_args()
